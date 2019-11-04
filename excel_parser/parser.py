@@ -12,9 +12,13 @@ def get_records(filename):
 	records = pe.get_records(file_name = "./db/" + filename)
 	return records
 
-def add_record(sheet, record, filename):
-    sheet.row += record
+def add_record(sheet, filename, new_record):
+    sheet.row += new_record
     sheet.save_as("./db/" + filename)
 
 def get_record(records, index):
     return records[index]
+
+def update_record(sheet, filename, index, new_record):
+    sheet.row[index] = new_record
+    sheet.save_as("./db/" + filename)

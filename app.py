@@ -6,9 +6,9 @@ from routes import *
 from excel_parser import parser
 
 sheet = parser.get_sheet("db.xlsx")
-parser.add_record(sheet, ["Joost", 0, 0, 0, 0, "se"], "db.xlsx")
+parser.add_record(sheet, "db.xlsx", ["Joost", 1000, 0, 0, 0, 0.1, 0, 0, 0])
 records = parser.get_records("db.xlsx")
-print(parser.get_record(records, 0))
+record = parser.get_record(records, 0)
 
 app = Flask(__name__)
 app.register_blueprint(routes)
