@@ -28,24 +28,22 @@ def record_to_list(record):
 
 # Antwoorden
 
-def handle_antwoorden(antwoorden, index):
+def handle_antwoorden(antwoorden, index, form):
 	for antwoord in antwoorden:
-		if request.form["antwoord"] == antwoord[0]:
-			sheet = parser.get_sheet("db.xlsx")
+		if form == antwoord[0]:
+			sheet = get_sheet("db.xlsx")
 
-			record = parser.get_record(parser.get_records("db.xlsx"), index)
+			record = get_record(get_records("db.xlsx"), index)
 				
 			if record["punten_" + antwoord[2]] != "":
 				record["punten_" + antwoord[2]] += antwoord[1]
 			else: 
 				record["punten_" + antwoord[2]] = antwoord[1]
 
-			new_record = parser.record_to_list(record)
+			new_record = record_to_list(record)
 
-			parser.update_record(sheet, "db.xlsx", index + 1, new_record)
+			update_record(sheet, "db.xlsx", index + 1, new_record)
 
 			return 1
-		else:
-			return 0
 	else:
 		return 0

@@ -19,30 +19,17 @@ def home():
 
 @routes.route("/vraag/1/<int:index>", methods = ["GET", "POST"])
 def v1(index):
-	vraag = "Is dit een vraag?"
-	antwoorden = [["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"], ["Aap", 2, "mc"]]
-
+	vraag = "Is dit een vraag?"	
+	antwoorden = [["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]]
+	
 	if request.method == "POST":
-		for antwoord in antwoorden:
-			if request.form["antwoord"] == antwoord[0]:
-				sheet = parser.get_sheet("db.xlsx")
-
-				record = parser.get_record(parser.get_records("db.xlsx"), index)
-				
-				if record["punten_" + antwoord[2]] != "":
-					record["punten_" + antwoord[2]] += antwoord[1]
-				else: 
-					record["punten_" + antwoord[2]] = antwoord[1]
-
-				new_record = parser.record_to_list(record)
-
-				parser.update_record(sheet, "db.xlsx", index + 1, new_record)
-
-				return redirect(url_for("routes.v2", index = index))
+		form = request.form["antwoord"]
+		if parser.handle_antwoorden(antwoorden, index, form) == 1:
+			return redirect(url_for("routes.v2", index = index))
 		else:
-			return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], antwoord5 = antwoorden[4][0])
+			return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
 	else:
-		return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], antwoord5 = antwoorden[4][0])
+		return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
 
 @routes.route("/vraag/2/<int:index>", methods = ["GET", "POST"])
 def v2(index):
