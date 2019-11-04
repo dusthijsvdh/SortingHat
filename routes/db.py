@@ -12,7 +12,7 @@ def get_record(index):
 def add_record(name):
 	sheet = parser.get_sheet("db.xlsx")
 	parser.add_record(sheet, "db.xlsx", [name])
-	sleep(1)
+	sleep(0.2)
 	return redirect(url_for("routes.get_record", index = -1))
 
 @routes.route("/db/update_record/<int:index>/<field>/<value>")

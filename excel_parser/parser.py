@@ -25,3 +25,27 @@ def update_record(sheet, filename, index, new_record):
 
 def record_to_list(record):
 	return [ v for v in record.values() ]
+
+# Antwoorden
+
+def handle_antwoorden(antwoorden, index):
+	for antwoord in antwoorden:
+		if request.form["antwoord"] == antwoord[0]:
+			sheet = parser.get_sheet("db.xlsx")
+
+			record = parser.get_record(parser.get_records("db.xlsx"), index)
+				
+			if record["punten_" + antwoord[2]] != "":
+				record["punten_" + antwoord[2]] += antwoord[1]
+			else: 
+				record["punten_" + antwoord[2]] = antwoord[1]
+
+			new_record = parser.record_to_list(record)
+
+			parser.update_record(sheet, "db.xlsx", index + 1, new_record)
+
+			return 1
+		else:
+			return 0
+	else:
+		return 0
