@@ -15,7 +15,7 @@ de 4 richtingen
 achievments - afchecken bij de balie | https://ipohbo.firebaseapp.com/
 vrijdag 10:00-14:00 presentatiemarkt & afsluiting
 
-## Stapenplan
+## Stappenplan
 
 1. Data verzamelen
 2. Unieke kenmerken van specialisaties selecteren
