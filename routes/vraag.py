@@ -1,6 +1,6 @@
 # Predefined modules
 from flask import render_template, redirect, request, url_for
-import requests
+import json
 
 # Our own routes
 from excel_parser import parser
@@ -13,36 +13,30 @@ def home():
 		name = request.form["name"]
 		db.add_record(name)
 		index = len(parser.get_records("db.xlsx")) - 1
-		return redirect(url_for("routes.v1", index = index))
+		return redirect(url_for("routes.vraag", vraagGetal = 1, index = index))
 	else:
 		return render_template("index.html")
 
-@routes.route("/vraag/1/<int:index>", methods = ["GET", "POST"])
-def v1(index):
-	vraag = "Is dit een vraag?"	
-	antwoorden = [["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]]
+@routes.route("/vraag/<int:vraagGetal>/<int:index>", methods = ["GET", "POST"])
+def vraag(vraagGetal, index):
+	with open("./routes/vragen.json") as f:
+		vragenDict = json.load(f)
 	
+	vraag = vragenDict["vragen"][vraagGetal - 1]
+	antwoorden = vragenDict["antwoorden"][vraagGetal - 1]
+
 	if request.method == "POST":
 		form = request.form["antwoord"]
 		if parser.handle_antwoorden(antwoorden, index, form) == 1:
-			return redirect(url_for("routes.v2", index = index))
+			if vraagGetal != len(vragenDict["vragen"]):
+				return redirect(url_for("routes.vraag", vraagGetal = vraagGetal + 1, index = index))
+			else:
+				return redirect(url_for("routes.uitslag", index = index))
 		else:
 			return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
-	else:
+	else: 	
 		return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
 
-@routes.route("/vraag/2/<int:index>", methods = ["GET", "POST"])
-def v2(index):
-	return "Vraag 2"
-
-@routes.route("/vraag/3", methods = ["GET", "POST"])
-def v3():
-	return "Vraag 3"
-
-@routes.route("/vraag/4", methods = ["GET", "POST"])
-def v4():
-	return "Vraag 4"
-
-@routes.route("/uitslag")
-def uitslag():
+@routes.route("/uitslag/<index>")
+def uitslag(index):
 	return "Uitslag"
