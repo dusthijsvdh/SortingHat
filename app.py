@@ -7,4 +7,4 @@ from excel_parser import parser
 
 app = Flask(__name__)
 app.register_blueprint(routes)
-app.run()
+app.run(debug = True)
