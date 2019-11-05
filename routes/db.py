@@ -3,6 +3,11 @@ from time import sleep
 from excel_parser import parser
 from flask import Flask, redirect, url_for
 
+@routes.route("/db/get_records")
+def get_records():
+	records = parser.get_records("db.xlsx")
+	return {"records": records}
+
 @routes.route("/db/get_record/<index>")
 def get_record(index):
 	records = parser.get_records("db.xlsx")

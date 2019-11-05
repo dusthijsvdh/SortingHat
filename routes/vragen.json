@@ -1,4 +1,6 @@
 {
 	"vragen": ["Is dit een vraag?", "Ben jij een oelewapper?"],
-	"antwoorden": [[["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]], [["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]]]
+	"antwoorden": [
+		[["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]], 
+		[["Ja", 1000, "an"], ["Nee", 10, "ad"], ["Mischien", 1, "re"], ["Wellicht", 50, "on"]]]
 }

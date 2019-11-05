@@ -11,7 +11,7 @@ from routes import db
 def home():
 	if request.method == "POST" and request.form["name"] != "":
 		name = request.form["name"]
-		db.add_record(name)
+		db.add_record([name, 0,0,0,0,0])
 		index = len(parser.get_records("db.xlsx")) - 1
 		return redirect(url_for("routes.vraag", vraagGetal = 1, index = index))
 	else:
