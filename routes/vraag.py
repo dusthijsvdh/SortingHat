@@ -19,9 +19,9 @@ def home():
 			return redirect(url_for("routes.uitslag", index = 0, uitslag = "SSSAAAAANG!!!!!"))
 		# If none of the easter-eggs is triggered, the code below will be called.
 		else:
-			# Get the name variable and add it to the database
+			# Get the name variable and add it to the database.
 			name = request.form["name"]
-			db.add_record([name, 0,0,0,0,0])
+			db.add_record(name)
 			# Get the index of the record in the db.
 			index = len(parser.get_records("db.xlsx")) - 1
 			# Redirect to the first question with the index of the record in the db.
