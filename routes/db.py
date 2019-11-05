@@ -22,7 +22,7 @@ def get_record(index):
 @routes.route("/db/add_record/<name>")
 def add_record(name):
 	sheet = parser.get_sheet("db.xlsx")
-	parser.add_record(sheet, "db.xlsx", [name,0,0,0,0,0])
+	parser.add_record(sheet, "db.xlsx", [name,0,0,0,0])
 	sleep(0.2)
 	return redirect(url_for("routes.get_record", index = -1))
 
