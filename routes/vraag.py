@@ -53,7 +53,8 @@ def vraag(vraagGetal, index):
 				# If it whas not the last question we render the next question.
 				return redirect(url_for("routes.vraag", vraagGetal = vraagGetal + 1, index = index))
 			else:
-				# If it whas the last question we calculate the result and then we render the result page.
+				# If it was the last question we calculate the result and then we render the result page.
+				uitslag = calc.calculate(index)
 				return redirect(url_for("routes.uitslag", index = index, uitslag = "SE natuurlijk"))
 		else:
 			# If the form returned an error we rerender the question.
