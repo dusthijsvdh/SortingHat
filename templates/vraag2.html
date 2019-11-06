@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="The Sort Hat">
+  <meta name="author" content="Sphynxtax">
+
+  <title>De Sorteerhoed</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/sorteerhoed.min.css') }}" rel="stylesheet">
+
+  <!-- Custom css -->
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    #myVideo {
+      position: fixed;
+      z-index: -1;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    #green {
+      background-color: #025918;
+    }
+
+    #progress-bar {
+      background-color: #661C45;
+      transition: width 2s;
+
+      width: {
+          {
+          ((vraagGetal - 1) / 15) * 100
+        }
+      }
+
+      %;
+    }
+  </style>
+
+</head>
+
+<body id="page-top" onload="progressBarAnimation({{ vraagGetal }})">
+
+  <!-- Navigation -->
+  <!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">De Magische App</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        </ul>
+      </div>
+    </div>
+  </nav> -->
+
+  <div class="container-fluid h-100 bg">
+    <div class="d-flex h-100 w-100 text-center">
+      <div class="w-100 text-black" id="test">
+        <h1 class="display-2">{{ vraag }}</h1>
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="{{ vraagGetal }}"
+            aria-valuemin="0" aria-valuemax="15"></div>
+        </div>
+        <br>
+        <form method="post">
+          <input type="submit" name="antwoord" value="{{ antwoord1 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input type="submit" name="antwoord" value="{{ antwoord2 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input type="submit" name="antwoord" value="{{ antwoord3 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input onmouseover="playVideo()" onmouseout="pauseVideo()" type="submit" name="antwoord" value="{{ antwoord4 }}" class="btn btn-primary btn-block playvideo" id="green">
+        </form>
+      </div>
+    </div>
+    <video loop id="myVideo">
+      <source src="{{ url_for('static', filename='video/wizzard_harry.mp4') }}" type="video/mp4">
+    </video>
+  </div>
+
+  <script>
+    window.onload = function () { //executes code after DOM loads
+      //--- select all <video> on the page
+      const button = document.getElementsByClassName("playvideo")
+      const vids = document.getElementsByTagName('video')
+      // Loop over the selected elements and add event listeners
+      for (let i = 0; i < vids.length; i++) {
+        text[i].addEventListener('mouseover', function (e) {
+          vids[i].play()
+        })
+        text[i].addEventListener('mouseout', function (e) {
+          vids[i].pause()
+        })
+      }
+    }
+
+    function playVideo() {
+      const vids = document.getElementsByTagName('video')
+      for (let i = 0; i < vids.length; i++){
+        vids[i].play()
+      }
+    }
+
+    function pauseVideo() {
+      const vids = document.getElementsByTagName('video')
+      for (let i = 0; i < vids.length; i++){
+        vids[i].pause()
+      }
+    }
+  </script>
+
+  <!-- <script>
+    var antwoorden = {{ antwoorden|safe }};
+    antwoorden.forEach(function(item, index) {
+      document.getElementById("test").innerHTML += "<h3>" + item[0] + "</h3>"
+    });
+  </script> -->
+
+  <!-- Header -->
+  <!-- <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+        <h1 class="mx-auto my-0 text-uppercase" style="font-family: harryPotter;">De Sorteerhoed</h1>
+        <br>
+        <h2 class="text-white-50 mx-auto mt-2 mb-5">{{ vraag }}</h2>
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="{{ vraagGetal }}"
+            aria-valuemin="0" aria-valuemax="15"></div>
+        </div>
+        <br>
+        <form method="post">
+          <input type="submit" name="antwoord" value="{{ antwoord1 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input type="submit" name="antwoord" value="{{ antwoord2 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input type="submit" name="antwoord" value="{{ antwoord3 }}" class="btn btn-primary btn-block" id="green">
+          <br>
+          <input type="submit" name="antwoord" value="{{ antwoord4 }}" class="btn btn-primary btn-block" id="green">
+        </form>
+        <br>
+      </div>
+      <video playsinline autoplay loop id="myVideo">
+        <source src="{{ url_for('static', filename='video/wizzard_harry.mp4') }}" type="video/mp4">
+      </video>
+    </div>
+  </header> -->
+
+
+
+  <!-- Footer -->
+  <!-- <footer class="bg-black small text-center text-white-50">
+    <div class="container">
+      Copyright &copy; De Sorteerhoed owned by Spynxtax
+    </div>
+  </footer> -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script>
+    function progressBarAnimation(vraagGetal) {
+      var progress = (vraagGetal / 15) * 100;
+      document.getElementById("progress-bar").style.width = progress + "%";
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,20 +1,22 @@
 import excel_parser.parser as exp
-from random import choice
+import json
 
 def calculate(index):
     rec = exp.get_record(exp.get_records("db.xlsx"), int(index))
     
-    se = rec["punten_se"]
-    fict = rec["punten_fict"]
-    bdam = rec["punten_bdam"]
-    iat = rec["punten_bdam"]
+    specs = {
+        "se": {"max": 0, "cur": rec["punten_se"], "procent": 0},
+        "fict": {"max": 0, "cur": rec["punten_fict"], "procent": 0},
+        "bdam": {"max": 0, "cur": rec["punten_bdam"], "procent": 0},
+        "iat": {"max": 0, "cur": rec["punten_iat"], "procent": 0}
+    }
     
-    res = [se, fict, bdam, iat]
-    res.sort()
-    specs = ["se", "fict", "bdam", "iat"]
-    uitslag = ""
+    with open("./routes/vragen.json") as f:
+        vragenDict = json.load(f)
+        
+    for antwoorden in vragenDict["antwoorden"]:
+        for antwoord in antwoorden:
+            specs[antwoord[2]]["max"] += antwoord[1]
+            specs[antwoord[2]]["procent"] = (specs[antwoord[2]]["cur"] / specs[antwoord[2]]["max"]) * 100
     
-    for spec in specs:
-        if rec["punten_" + spec] == res[-1]:
-            uitslag = spec
-    return uitslag
+    return "testing"
