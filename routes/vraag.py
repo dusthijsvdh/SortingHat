@@ -75,10 +75,10 @@ def vraag(vraagGetal, index):
                 return redirect(url_for("routes.uitslag", index = index, uitslag = uitslag))
         else:
             # If the form returned an error we rerender the question.
-            return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
+            return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal)
     else: 	
         # Is there is no form data we render the question.
-        return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0])
+        return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal)
 
 # This route renders the result page
 @routes.route("/uitslag/<index>/<uitslag>")
