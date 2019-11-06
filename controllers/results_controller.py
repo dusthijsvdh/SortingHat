@@ -1,4 +1,4 @@
-import excel_parser.parser as exp
+import controllers.excel_controller as exp
 import json
 
 def calculate(index):
@@ -11,7 +11,7 @@ def calculate(index):
         "iat": {"max": 0, "cur": rec["punten_iat"], "procent": 0}
     }
     
-    with open("./routes/vragen.json") as f:
+    with open("./static/vragen.json") as f:
         vragenDict = json.load(f)
         
     for antwoorden in vragenDict["antwoorden"]:
