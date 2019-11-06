@@ -20,6 +20,27 @@
 
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='css/sorteerhoed.min.css') }}" rel="stylesheet">
+
+  <script>
+	window.onload = async function() {
+		if("{{uitslag}}" == "se") {
+			var audio = new Audio("{{ url_for('static', filename='sounds/se.mp3') }}");
+			audio.play();
+		} else if("{{uitslag}}" == "fict") {
+			var audio = new Audio("{{ url_for('static', filename='sounds/fict.mp3') }}");
+			audio.play().catch(e => {
+				console.log(e)
+			});
+		} else if("{{uitslag}}" == "iat") {
+			var audio = new Audio("{{ url_for('static', filename='sounds/iat.mp3') }}");
+			audio.play();
+		} else if("{{uitslag}}" == "bdam") {
+			var audio = new Audio("{{ url_for('static', filename='sounds/bdam.mp3') }}");
+			audio.play();
+		}
+	}
+  </script>
+
 <style>
 html, body {
     height: 100%;
