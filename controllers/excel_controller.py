@@ -11,8 +11,8 @@ def get_records(filename):
 	return records
 
 # This function gets one specific record.
-def get_record(records, index):
-    return records[index]
+def get_record(index):
+    return get_records("db.xlsx")[index]
 
 # This function adds a record to the db.
 def add_record(sheet, filename, new_record):
