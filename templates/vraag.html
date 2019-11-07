@@ -25,13 +25,28 @@
 
   <!-- Custom css -->
   <style>
-    html, body {
+    html,body {
       height: 100%;
     }
 
-    #myVideo {
+    #background {
       position: fixed;
       z-index: -1;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      background-image: url(/static/img/Houses.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 1;
+      transition: opacity 2s ease-in-out;
+    }
+
+    #video {
+      position: fixed;
+      z-index: -2;
       right: 0;
       bottom: 0;
       min-width: 100%;
@@ -51,7 +66,7 @@
 
 </head>
 
-<body id="page-top" onload="progressBarAnimation({{ vraagGetal }})">
+<body id="page-top" onload="start({{ vraagGetal }})">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -70,36 +85,24 @@
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="masthead">
-    <div class="container d-flex h-100 align-items-center">
-      <div class="mx-auto text-center">
-        <h1 class="mx-auto my-0 text-uppercase" style="font-family: harryPotter;">De Sorteerhoed</h1>
-        <br>
-        <h2 class="text-white-50 mx-auto mt-2 mb-5">{{ vraag }}</h2>
+  <div class="container-fluid h-100">
+    <div class="d-flex h-100 w-100 text-center align-items-center">
+      <div class="w-100 text-white" id="test">
+        <h1 class="display-2">{{ vraag }}</h1>
         <div class="progress">
           <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="{{ vraagGetal }}"
             aria-valuemin="0" aria-valuemax="15"></div>
         </div>
         <br>
-        <form method="post">
-          <input type="submit" name="antwoord" value="{{ antwoord1 }}" class="btn btn-primary btn-block" id="green">
-          <br>
-          <input type="submit" name="antwoord" value="{{ antwoord2 }}" class="btn btn-primary btn-block" id="green">
-          <br>
-          <input type="submit" name="antwoord" value="{{ antwoord3 }}" class="btn btn-primary btn-block" id="green">
-          <br>
-          <input type="submit" name="antwoord" value="{{ antwoord4 }}" class="btn btn-primary btn-block" id="green">
+        <form method="post" id="buttons">
         </form>
-        <br>
       </div>
-      <video playsinline autoplay loop id="myVideo">
-        <source src="{{ url_for('static', filename='video/wizzard_harry.mp4') }}" type="video/mp4">
-      </video>
     </div>
-  </header>
-
-
+    <div id="background"></div>
+    <video loop preload="none" id="video">
+      <source src="{{ url_for('static', filename='video/wizzard_harry.mp4') }}" type="video/mp4" id="videoSource">
+    </video>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-black small text-center text-white-50">
@@ -117,10 +120,49 @@
 
   <!-- Custom scripts for this template -->
   <script>
+    function start(vraagGetal) {
+      progressBarAnimation(vraagGetal);
+      generateButtons();
+    };
+
     function progressBarAnimation(vraagGetal) {
       var progress = (vraagGetal / 15) * 100;
       document.getElementById("progress-bar").style.width = progress + "%";
-    }
+    };
+
+    function generateButtons() {
+      var antwoorden = {{ antwoorden|safe }};
+      antwoorden.forEach(function (item, index) {
+        if (item.length == 4) {
+          document.getElementById("buttons").innerHTML += '<input type="submit" onmouseover="playVideo(&#39;' +
+            item[3] + '&#39;)" onmouseout="pauseVideo()" name="antwoord" value="' + item[0] +
+            '" class="btn btn-primary btn-block" id="green">'
+        } else {
+          document.getElementById("buttons").innerHTML += '<input type="submit" name="antwoord" value="' + item[0] +
+            '" class="btn btn-primary btn-block" id="green">'
+        }
+      });
+    };
+
+    function playVideo(filename) {
+      const vid = document.getElementById("video");
+      const vidSrc = document.getElementById("videoSource");
+      document.getElementById("background").style.opacity = 0;
+      if ("http://localhost:5000/static/video/" + filename + ".mp4" == vidSrc.src) {
+        vid.currentTime = 0;
+        vid.play();
+      } else {
+        document.getElementById("videoSource").src = "/static/video/" + filename + ".mp4";
+        vid.load();
+        vid.play();
+      };
+    };
+
+    function pauseVideo() {
+      const vid = document.getElementById('video')
+      document.getElementById("background").style.opacity = 1;
+      vid.pause();
+    };
   </script>
 
 </body>
