@@ -2,7 +2,7 @@ import controllers.excel_controller as exp
 import json
 
 def calculate(index):
-    rec = exp.get_record(exp.get_records("db.xlsx"), int(index))
+    rec = exp.get_record(int(index))
     
     specs = {
         "se": {"max": 0, "cur": rec["punten_se"], "procent": 0},
