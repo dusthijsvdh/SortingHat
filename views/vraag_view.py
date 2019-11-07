@@ -18,6 +18,6 @@ def vraag(vraagGetal, index):
     return vraag_controller.vraag(vraagGetal, index, request.method, request.form)
 
 # This route renders the result page
-@views.route("/uitslag/<index>/<uitslag>")
-def uitslag(index, uitslag):
-    return vraag_controller.uitslag(index, uitslag)
+@views.route("/uitslag/<index>/<specialisatie>/<procent>")
+def uitslag(index, specialisatie, procent):
+    return vraag_controller.uitslag(index, specialisatie, procent)
