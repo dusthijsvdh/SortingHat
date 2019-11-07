@@ -17,7 +17,7 @@
 		"Wat is jouw favoriete karakter?"
 	],
 	"antwoorden": [
-		[["Hardware", 10, "iat"], ["Sofware", 10, "se"], ["Beide", 10, "fict"], ["Geen", 10, "bdam"]], 
+		[["Hardware", 10, "iat", "wizzard_harry"], ["Sofware", 10, "se", "griffindor"], ["Beide", 10, "fict"], ["Geen", 10, "bdam"]], 
 		[["(semi)Overheid", 10, "fict"], ["Een startup", 5, "se"], ["Een groot bedrijf", 5, "bdam"], ["Familiebedrijf", 5, "iat"]],
 		[["Errorcode opzoeken", 10, "se"], ["Vrienden/familie/collegas vragen", 10, "iat"], ["Support desk bellen", 10, "bdam"], ["Niet oplossen en opnieuw proberen", 10, "fict"]],
 		[["In paniek raken", 5, "fict"], ["Planning maken en taken verdelen", 10, "bdam"], ["Overleggen met de toebehorenden", 5, "iat"], ["De rol naar iemand anders verschuiven", 5, "se"]], 
