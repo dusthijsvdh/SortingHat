@@ -45,7 +45,12 @@ def vraag(vraagGetal, index, method, form):
                 return redirect(url_for("views.vraag", vraagGetal = vraagGetal + 1, index = index))
             else:
                 # If it was the last question we results_controllerulate the result.
-                uitslag = results_controller.calculate(index)
+                percentages = results_controller.calculate(index)
+                
+                keys = [k for k in percentages[0]]
+                specialisatie = keys[0]
+                
+                procent = int(percentages[0][specialisatie])
                 
                 # Get the sheet.
                 sheet = excel_controller.get_sheet("db.xlsx")
@@ -53,8 +58,8 @@ def vraag(vraagGetal, index, method, form):
                 # Get the current record.
                 record = excel_controller.get_record(index)
                 
-                # Change the uitkomst in the dictionary.
-                record["uitkomst"] = uitslag
+            	# Change the uitkomst in the dictionary.
+                record["uitkomst"] = f"{percentages}" 
                 
                 # Transform the dictionary to a list.
                 new_record = excel_controller.record_to_list(record)
@@ -63,13 +68,13 @@ def vraag(vraagGetal, index, method, form):
                 excel_controller.update_record(sheet, "db.xlsx", index + 1, new_record)
                 
                 # Render the result page
-                return redirect(url_for("views.uitslag", index = index, uitslag = uitslag))
+                return redirect(url_for("views.uitslag", index = index, specialisatie = specialisatie, procent = procent))
         else:
             # If the form returned an error we rerender the question.
-            return render_template("vraag2.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal, antwoorden = antwoorden)
+            return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal, antwoorden = antwoorden)
     else: 	
         # Is there is no form data we render the question.
-        return render_template("vraag2.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal, antwoorden = antwoorden)
+        return render_template("vraag.html", vraag = vraag, antwoord1 = antwoorden[0][0], antwoord2 = antwoorden[1][0], antwoord3 = antwoorden[2][0], antwoord4 = antwoorden[3][0], vraagGetal = vraagGetal, antwoorden = antwoorden)
 
 # This cuntion checks if the awnser is given and adds the given points in the db.
 def handle_antwoorden(antwoorden, index, form):
@@ -101,5 +106,5 @@ def handle_antwoorden(antwoorden, index, form):
 		# If it couldn't find the awnser it returns 0
 		return 0
 
-def uitslag(index, uitslag):
-    return render_template("uitslag.html", uitslag = uitslag)
+def uitslag(index, specialisatie, procent):
+    return render_template("uitslag.html", specialisatie = specialisatie, procent = procent)
