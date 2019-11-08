@@ -42,6 +42,10 @@
       background-size: cover;
     }
 
+    #vraag {
+      transition: opacity 1s;
+    }
+
     #video {
       position: fixed;
       z-index: -1;
@@ -122,7 +126,7 @@
   <script>
      const vid = document.getElementById("video");
     const vidSrc = document.getElementById("videoSource");
-    const btns = document.getElementsByTagName("input");
+    const vraag = document.getElementById("vraag");
     var vidIds = [];
 
     function load(vraagGetal) {
@@ -159,10 +163,12 @@
         vid.play();
       };
       vid.style.opacity = 1;
+      vraag.style.opacity = 0.5;
     };
 
     function pauseVideo() {
       vid.style.opacity = 0;
+      vraag.style.opacity = 1;
       vid.pause();
     };
   </script>
