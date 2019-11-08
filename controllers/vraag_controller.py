@@ -8,8 +8,8 @@ def home(method, form):
     if method == "POST" and form["name"] != "":
         # Check for the easter egg's.
         if form["name"].lower() == "harry potter":
-            return redirect(url_for("views.uitslag", index = 0, specialisatie = "Gryffindor!", procent = 100))
-        elif form["name"].lower() == "jesse" or form["name"].lower() == "ryan":
+            return redirect(url_for("views.uitslag", index = 0, specialisatie = "Gryffindor", procent = 100))
+        elif form["name"].lower() == "jesse minneboo" or form["name"].lower() == "ryan rooijakkers":
             return redirect(url_for("views.uitslag", index = 0, specialisatie = "SSSAAAAANG!!!!!", procent = 100))
         # If none of the easter-eggs is triggered, the code below will be called.
         else:
