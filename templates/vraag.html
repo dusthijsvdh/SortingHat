@@ -42,6 +42,10 @@
       background-size: cover;
     }
 
+    #vraag {
+      transition: opacity 1s;
+    }
+
     #video {
       position: fixed;
       z-index: -1;
@@ -51,7 +55,6 @@
       min-height: 100%;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      transition-delay: 1s;
     }
 
     .green {
@@ -88,7 +91,7 @@
 
   <div class="container-fluid h-100">
     <div class="d-flex h-100 w-100 text-center align-items-center">
-      <div class="w-100 text-white" id="test">
+      <div class="w-100 text-white" id="vraag">
         <h1 class="display-2">{{ vraag }}</h1>
         <div class="progress">
           <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="{{ vraagGetal }}"
@@ -121,10 +124,9 @@
 
   <!-- Custom scripts for this template -->
   <script>
-    var filenameGlbl = "";
-    const vid = document.getElementById("video");
+     const vid = document.getElementById("video");
     const vidSrc = document.getElementById("videoSource");
-    const btns = document.getElementsByTagName("input");
+    const vraag = document.getElementById("vraag");
     var vidIds = [];
 
     function load(vraagGetal) {
@@ -142,7 +144,7 @@
         if (item.length == 4) {
           vidIds.push(item[3]);
           document.getElementById("buttons").innerHTML += '<input type="submit" onmouseover="playVideo(&#39;' +
-            item[3] + '&#39;)" name="antwoord" value="' + item[0] +
+            item[3] + '&#39;)" onmouseout="pauseVideo()" name="antwoord" value="' + item[0] +
             '" class="btn btn-primary btn-block green" id="' + item[3] + '">';
         } else {
           document.getElementById("buttons").innerHTML += '<input type="submit" name="antwoord" value="' + item[0] +
@@ -152,71 +154,22 @@
     };
 
     function playVideo(filename) {
-      vid.addEventListener("transitioncancel", cancel);
-      vid.addEventListener("transitionrun", runpl);
-
-      filenameGlbl = filename;
-
       if ("http://localhost:5000/static/video/" + filename + ".mp4" == vidSrc.src) {
         vid.currentTime = 0;
+        vid.play();
       } else {
         vidSrc.src = "/static/video/" + filename + ".mp4";
         vid.load();
+        vid.play();
       };
-
-      vid.addEventListener("transitionstart", startpl); 
       vid.style.opacity = 1;
+      vraag.style.opacity = 0.5;
     };
 
     function pauseVideo() {
-      for (let i = 0; i < btns.length; i++) {
-        if (btns[i].id == filenameGlbl) {
-          btns[i].removeEventListener("mouseout", pauseVideo);
-        };
-      };
-      vid.addEventListener("transitioncancel", cancel);
-      vid.addEventListener("transitionend", endpa);
       vid.style.opacity = 0;
-    };
-
-    function runpl() {
-      vid.removeEventListener("transitionrun", arguments.callee);
-      vidIds.forEach(function(element) {
-        for (let i = 0; i < btns.length; i++) {
-          if (btns[i].id == filenameGlbl) {
-            btns[i].addEventListener("mouseout", pauseVideo);
-          };
-        };
-     });
-    };
-
-    function startpl() {
-      vid.removeEventListener("transitionstart", arguments.callee);
-      console.log("startpl");
-      vidIds.forEach(function(element) {
-        for (let i =0; i < btns.length; i++) {
-          if (btns[i].id != filenameGlbl) {
-            btns[i].disabled = true;
-          };
-        };
-      });
-      vid.play();
-    };
-
-    function cancel() {
-      vid.removeEventListener("transitioncancel", arguments.callee);
-      vid.removeEventListener("transitionstart", startpl);
-      console.log("cancel");
-      vid.style.opacity = 0;
-    };
-
-    function endpa() {
-      vid.removeEventListener("transitionend", arguments.callee);
-      console.log("endpa");
+      vraag.style.opacity = 1;
       vid.pause();
-      for (let i =0; i < btns.length; i++) {
-        btns[i].disabled = false;
-      };
     };
   </script>
 
