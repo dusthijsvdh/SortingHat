@@ -1,6 +1,5 @@
 # Soting Hat
 Dit is onze oplossing voor de eerste challange week
 
-## TODO
-
-1. voldoende halen
+## Wij zijn de beste
+En we hebben een voldoende gehaald!
